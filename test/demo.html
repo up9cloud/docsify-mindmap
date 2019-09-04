@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
   </head>
   <body>
-    <!-- markmap is based on d3, so must load those files first. -->
     <script src="//unpkg.com/d3@3/d3.min.js"></script>
     <script src="//unpkg.com/markmap@0.6.0/lib/d3-flextree.js"></script>
     <script src="//unpkg.com/markmap@0.6.0/lib/view.mindmap.js"></script>
@@ -12,6 +11,7 @@
     <div id="app"></div>
     <script>
       window.$docsify = {
+        basePath: '/test/',
         mindmap: {
           preset: 'colorful', // or default
           linkShape: 'diagonal' // or bracket

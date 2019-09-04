@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  </head>
+  <body>
+    <script src="//unpkg.com/d3@3/d3.min.js"></script>
+    <script src="//unpkg.com/markmap@0.6.0/lib/d3-flextree.js"></script>
+    <script src="//unpkg.com/markmap@0.6.0/lib/view.mindmap.js"></script>
+
+    <div id="app"></div>
+    <script>
+      window.$docsify = {
+        basePath: '/test/',
+        mindmap: {
+          preset: 'colorful', // or default
+          linkShape: 'diagonal' // or bracket
+        }
+      }
+    </script>
+    <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
+    <!-- webpack inject bundle js -->
+  </body>
+</html>

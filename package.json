@@ -23,7 +23,7 @@
     "README.md"
   ],
   "dependencies": {
-    "markmap": "^0.6.0"
+    "markmap": "^0.6.1"
   },
   "devDependencies": {
     "html-webpack-plugin": "^3.2.0",

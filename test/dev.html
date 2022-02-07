@@ -7,15 +7,25 @@
     <script src="//unpkg.com/d3@3/d3.min.js"></script>
     <script src="//unpkg.com/markmap@0.6.0/lib/d3-flextree.js"></script>
     <script src="//unpkg.com/markmap@0.6.0/lib/view.mindmap.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/markmap@0.6.1/style/view.mindmap.css">
 
     <div id="app"></div>
     <script>
       window.$docsify = {
         basePath: '/test/',
         mindmap: {
-          preset: 'colorful', // or default
-          linkShape: 'diagonal' // or bracket
-        }
+          markmap: {
+            preset: 'colorful', // or default
+            linkShape: 'diagonal' // or bracket
+          }
+        },
+        plugins: [
+          function(hook) {
+            hook.beforeEach(function(content) {
+              console.log(content)
+            })
+          }
+        ]
       }
     </script>
     <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>

@@ -13,15 +13,19 @@ Mind map plugin for [docsify](https://github.com/docsifyjs/docsify).
   <body>
     <!-- markmap is based on d3, so must load those files first. -->
     <script src="//unpkg.com/d3@3/d3.min.js"></script>
-    <script src="//unpkg.com/markmap@0.6.0/lib/d3-flextree.js"></script>
-    <script src="//unpkg.com/markmap@0.6.0/lib/view.mindmap.js"></script>
+    <script src="//unpkg.com/markmap@0.6.1/lib/d3-flextree.js"></script>
+    <script src="//unpkg.com/markmap@0.6.1/lib/view.mindmap.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/markmap@0.6.1/style/view.mindmap.css">
 
     <div id="app"></div>
     <script>
       window.$docsify = {
         mindmap: {
-          preset: 'colorful', // or default
-          linkShape: 'diagonal' // or bracket
+          // https://github.com/dundalek/markmap
+          markmap: {
+            preset: 'colorful', // or default
+            linkShape: 'diagonal' // or bracket
+          }
         }
       }
     </script>
@@ -44,9 +48,9 @@ root
 ````
 
 ````md
-# JSON format
+# JSON tree format
 
-```mindmap-json
+```mindmap json-tree
 {
   "name": "root",
   "children": [
@@ -65,7 +69,7 @@ root
 
 > See [demo](http://up9cloud.github.io/docsify-mindmap) for more format
 
-## Dev
+## Dev memo
 
 ```bash
 npm i
@@ -74,5 +78,5 @@ npm run dev
 
 ## TODO
 
-- Stop d3 resizing
-- To find another light weight mindmap render engine
+- [ ] Stop d3 resizing
+- [ ] To find another light weight mindmap render engine

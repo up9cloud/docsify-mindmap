@@ -9,18 +9,17 @@ const env = process.env.NODE_ENV || 'development'
 const webpackConfig = merge(webpackBaseConfig, {
   mode: env,
   devServer: {
-    watchContentBase: true,
+    static: {
+      directory: path.join(__dirname, '..'),
+    },
     open: true,
-    openPage: '',
     port: 8080,
-    hot: true,
-    inline: true,
-    publicPath: '/'
+    hot: true
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(process.cwd(), 'test', 'index.html'),
+      template: path.join(process.cwd(), 'test', 'dev.html'),
       inject: true,
       hash: true
     })

@@ -1,6 +1,6 @@
 {
   "name": "docsify-mindmap",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Mind map plugin for docsify",
   "main": "src/docsify-mindmap.js",
   "directories": {

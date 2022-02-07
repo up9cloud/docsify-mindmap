@@ -1,12 +1,10 @@
-name: Publish Package to npmjs
+name: Publish
 on:
-  workflow_run:
-    workflows:
-    - Build
-    types:
-    - completed
+  push:
+    branches:
+      - master
     tags:
-    - '*'
+      - '*'
 
 jobs:
   build:
@@ -16,6 +14,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16.x'
+      - run: npm i
+      - run: npm run build
       - run: npm ci
       - run: npm publish
         env:

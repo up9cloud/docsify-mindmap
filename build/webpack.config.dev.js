@@ -8,6 +8,7 @@ const env = process.env.NODE_ENV || 'development'
 
 const webpackConfig = merge(webpackBaseConfig, {
   mode: env,
+  target: 'web',
   devServer: {
     static: {
       directory: path.join(__dirname, '..'),
@@ -19,7 +20,7 @@ const webpackConfig = merge(webpackBaseConfig, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(process.cwd(), 'test', 'dev.html'),
+      template: path.join(process.cwd(), 'docs', 'dev.html'),
       inject: true,
       hash: true
     })

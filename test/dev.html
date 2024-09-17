@@ -9,26 +9,38 @@
     <script src="//unpkg.com/markmap@0.6.1/lib/view.mindmap.js"></script>
     <link rel="stylesheet" href="//unpkg.com/markmap@0.6.1/style/view.mindmap.css">
 
+    <script src="//unpkg.com/kity@2.0.4/dist/kity.min.js"></script>
+    <script src="//unpkg.com/kityminder-core@1/dist/kityminder.core.min.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/kityminder-core@1/dist/kityminder.core.css">
+
     <div id="app"></div>
     <script>
       window.$docsify = {
         basePath: '/test/',
+        loadSidebar: true,
+        relativePath: true,
+        auto2top: true,
+        subMaxLevel: 2,
+        alias: {
+          '/.*/_sidebar.md': '_sidebar.md'
+        },
         mindmap: {
           markmap: {
             preset: 'colorful', // or default
             linkShape: 'diagonal' // or bracket
           }
         },
-        plugins: [
-          function(hook) {
-            hook.beforeEach(function(content) {
-              console.log(content)
-            })
+        markdown: {
+          renderer: {
+            code: function(code, lang) {
+              console.log(lang)
+              return this.origin.code.apply(this, arguments);
+            }
           }
-        ]
+        }
       }
     </script>
-    <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
+    <script src="//unpkg.com/docsify@4/lib/docsify.js"></script>
     <!-- webpack inject bundle js -->
   </body>
 </html>

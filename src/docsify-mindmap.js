@@ -2,9 +2,9 @@ import markmap from 'markmap'
 import parseTxt from 'markmap/lib/parse.txtmap.js'
 import transform from 'markmap/lib/transform.headings.js'
 import transformMindmup from 'markmap/lib/transform.mindmup.js'
+import 'kityminder-core/dist/kityminder.core.js'
 
 const id = 'mindmap'
-const blockRe = /\n```mindmap([a-z- ]*)\n([\s\S]*?)\n```/g
 function parseContent(rawContent, dataType) {
   let data, engine
   switch (dataType) {
@@ -32,13 +32,13 @@ function parseContent(rawContent, dataType) {
       } catch (e) {}
       break
     // TODO:
-    // case 'kityminder':
-    // case 'json-kityminder':
-    //   try {
-    //     data = rawContent
-    //     engine = 'kityminder'
-    //   } catch (e) {}
-    //   break
+    case 'kityminder':
+    case 'json-kityminder':
+      try {
+        data = rawContent
+        engine = 'kityminder'
+      } catch (e) {}
+      break
   }
   return { data, engine }
 }
@@ -75,69 +75,63 @@ function install (hook, { config = {} } = {}) {
       config[id].markmap[k] = config[id][k]
     }
   }
-  const ignoreKey = '````md\n'
+  if (!config.markdown) {
+    config.markdown = {}
+  }
+  if (!config.markdown.renderer) {
+    config.markdown.renderer = {}
+  }
   let renderJobs = []
-  hook.beforeEach(function (content) {
-    renderJobs = []
-    let prevIndex = 0
-    let match
-    let fixedContent = ''
-    while (match = blockRe.exec(content)) { // eslint-disable-line no-cond-assign
-      const startIndex = match.index + 1 // \n
-      const endIndex = blockRe.lastIndex
-      // const endIndex = match.index + match[0].length
-      fixedContent += content.substring(prevIndex, startIndex)
-      prevIndex = startIndex
-
-      if (content.substring(startIndex - ignoreKey.length, startIndex) === ignoreKey) {
-        fixedContent += content.substring(prevIndex, endIndex)
-        prevIndex = endIndex
-        continue
-      }
-
-      const dataType = match[1].substring(1).trim() || 'txtmap'
-      const { data, engine } = parseContent(match[2], dataType)
-
-      const randomId = `${id}-${engine}-${Math.random().toString().substring(2)}`
+  const conflict =config.markdown.renderer.code
+  config.markdown.renderer.code = function(code, lang) {
+    const ll = lang.split(' ')
+    const mainLang = ll[0]
+    if (mainLang === id) {
+      const dataType = ll[1] || 'txtmap'
+      const { data, engine } = parseContent(code, dataType)
       switch (engine) {
         case 'markmap': {
+          const randomId = `${id}-${engine}-${Math.random().toString().substring(2)}`
           const o = countTree(data)
+          let html = ''
           if (o.height > 3) { // default d3 block height is 150, should be fine with 3 items
             const multi = 1 + Math.round(o.height / 6)
             let height = multi * 150
             if (multi > o.depth) {
               height = o.depth * 150
             }
-            fixedContent += `<svg id="${randomId}" style="width:100%;height:${height}px"></svg>`
+            html = `<svg id="${randomId}" style="width:100%;min-height:${height}px"></svg>`
           } else {
-            fixedContent += `<svg id="${randomId}" style="width:100%"></svg>`
+            html = `<svg id="${randomId}" style="width:100%"></svg>`
           }
           renderJobs.push(function () {
             markmap(`svg#${randomId}`, data, config[id].markmap)
           })
-          break
+          return html
         }
-        // case 'kityminder': {
-        //   fixedContent += `<script id="${randomId}" type="application/kityminder" minder-data-type="json">${data}</script>`
-        //   renderJobs.push(function () {
-        //     new kityminder.Minder({ // eslint-disable-line no-new
-        //       renderTo: `#${randomId}`
-        //     })
-        //   })
-        //   break
-        // }
-        default:
-          fixedContent += content.substring(prevIndex, endIndex)
+        case 'kityminder': {
+          const randomId = `${id}-${engine}-${Math.random().toString().substring(2)}`
+          renderJobs.push(function () {
+            // new kityminder.Minder({ // eslint-disable-line no-new
+            //   renderTo: `div#${randomId}`
+            // })
+            var km = new kityminder.Minder()
+            km.setup(`#${randomId}`)
+          })
+          return `<script id="${randomId}" type="application/kityminder" minder-data-type="json">${data}</script>`
+          // return `<div id="${randomId}"></div>`
+        }
       }
-      prevIndex = endIndex
     }
-    fixedContent += content.substring(prevIndex)
-    return fixedContent
+    if (conflict) {
+      return conflict.apply(this, arguments)
+    }
+    return this.origin.code.apply(this, arguments);
+  }
+  hook.beforeEach(function (markdown) {
+    renderJobs = []
+    return markdown;
   })
-  // hook.afterEach(function (html, next) {
-  //   next(html)
-  // })
-
   hook.doneEach(function () {
     for (const job of renderJobs) {
       job()

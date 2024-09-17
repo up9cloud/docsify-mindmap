@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,7 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm i
       - run: npm run build
-      # https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
+      # https://docs.npmjs.com/generating-provenance-statements#example-github-actions-workflow
       - run: npm ci
       - run: npm publish --provenance --access public
         env:

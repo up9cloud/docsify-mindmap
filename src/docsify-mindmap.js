@@ -3,7 +3,7 @@ import parseTxt from 'markmap/lib/parse.txtmap.js'
 import transform from 'markmap/lib/transform.headings.js'
 import transformMindmup from 'markmap/lib/transform.mindmup.js'
 
-import 'kityminder-core/dist/kityminder.core.js'
+// import 'kityminder-core/dist/kityminder.core.js'
 
 // import { Transformer } from 'markmap-lib'
 // import { fillTemplate } from 'markmap-render';

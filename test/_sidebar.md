@@ -2,5 +2,6 @@
   - [Default](/README.md)
   - [markmap json](/more/markmap.md)
   - [markmap json-mup](/more/markmap-json-mup.md)
-  - [markmap json-mup](/more/kityminder.md)
+  - [markmap kityminder](/more/kityminder.md)
+  - [markmap md](/more/markmap-lib.md)
   - [Test](/more/not-mindmap.md)

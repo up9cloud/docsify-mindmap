@@ -2,7 +2,12 @@ import markmap from 'markmap'
 import parseTxt from 'markmap/lib/parse.txtmap.js'
 import transform from 'markmap/lib/transform.headings.js'
 import transformMindmup from 'markmap/lib/transform.mindmup.js'
+
 import 'kityminder-core/dist/kityminder.core.js'
+
+// import { Transformer } from 'markmap-lib'
+// import { fillTemplate } from 'markmap-render';
+// const transformer = new Transformer()
 
 const id = 'mindmap'
 function parseContent(rawContent, dataType) {
@@ -34,11 +39,17 @@ function parseContent(rawContent, dataType) {
     // TODO:
     case 'kityminder':
     case 'json-kityminder':
-      try {
-        data = rawContent
-        engine = 'kityminder'
-      } catch (e) {}
+      data = rawContent
+      engine = 'kityminder'
       break
+    // case 'md': {
+    //   try {
+    //     const { root, features } = transformer.transform(markdown)
+    //     data = root
+    //     console.log(root, features)
+    //     engine = 'markmap-lib'
+    //   } catch (e) {}
+    // }
   }
   return { data, engine }
 }
@@ -121,6 +132,10 @@ function install (hook, { config = {} } = {}) {
           return `<script id="${randomId}" type="application/kityminder" minder-data-type="json">${data}</script>`
           // return `<div id="${randomId}"></div>`
         }
+        // case 'markmap-lib': {
+        //   const html = fillTemplate(data)
+        //   return html
+        // }
       }
     }
     if (conflict) {

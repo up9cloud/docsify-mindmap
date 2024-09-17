@@ -19,12 +19,6 @@ some
     file
       structure
 ```
-
-or
-
-```mindmap txtmap
-...
-```
 ````
 
 ```mindmap txtmap

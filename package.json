@@ -6,6 +6,10 @@
   "directories": {
     "test": "test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:up9cloud/docsify-mindmap.git"
+  },
   "scripts": {
     "dev": "webpack-dev-server --config build/webpack.config.dev.js",
     "build": "webpack --config build/webpack.config.build.js",

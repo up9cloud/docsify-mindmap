@@ -5,7 +5,7 @@
 ## md
 
 ````md
-```markmap md
+```mindmap md
 ...
 ```
 ````
